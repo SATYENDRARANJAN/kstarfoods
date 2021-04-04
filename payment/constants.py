@@ -1,0 +1,3 @@
+
+RAZORPAY_TEST_KEY = "rzp_test_eDcPWwaOeNzJiJ"
+RAZORPAY_TEST_SECRET = 'PMYJwVIqeNgLIz8RUfezgzSW'
