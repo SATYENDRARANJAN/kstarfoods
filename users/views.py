@@ -149,8 +149,8 @@ def login(request):
 
     payload = ""
     headers = {'content-type': 'application/x-www-form-urlencoded'}
-    response = requests.request("GET", url, data=payload, headers=headers)
-    print(response.text)
+    # response = requests.request("GET", url, data=payload, headers=headers)
+    # print(response.text)
     return Response(data={'user_id':user.id},status=status.HTTP_201_CREATED)
 
 

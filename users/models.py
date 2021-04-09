@@ -94,7 +94,6 @@ class UserManager(BaseUserManager):
         user.save(using= self._db)
         return user
 
-
 class StaffManager(BaseUserManager):
     def create_staff_user(self,phone=None,email=None,password=None, is_staff=False, is_active=False,is_admin=False):
         if not email:
@@ -109,14 +108,12 @@ class StaffManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
-
 class User(AbstractBaseUser):
     Customer ="Customer"
     Staff ="Staff"
     Seller = "Seller"
     phone_regex = RegexValidator(regex =r'^[6-9]{1}[0-9]{9}$',message="Check Phone no.")
-    id = models.CharField(primary_key=True,default=uuid.uuid4(),max_length=100,editable=True)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,max_length=100,editable=True)
     phone = models.CharField(validators=[phone_regex],max_length=15,unique=True,null=True)
     email  = models.EmailField(null=True)
     is_active = models.BooleanField(default=False)
@@ -125,7 +122,6 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=100,choices=[(Customer,_('Customer')),(Staff,_('Staff')),(Seller,'Seller')])
-
 
     USERNAME_FIELD ='phone'
     REQUIRED_FIELD = []
@@ -139,14 +135,11 @@ class User(AbstractBaseUser):
     def has_module_perms(self, obj=None):
         return True
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User,related_name="profile",on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     date_of_birth =models.DateField(null=True)
-
-
 
 class UserAddress(models.Model):
     user=models.OneToOneField(User,related_name="address",on_delete=models.CASCADE)
@@ -158,7 +151,6 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return f'{self.street} + " " +{self.city} + " " + {self.pincode}'
-
 
 class PhoneOTP(models.Model):
     user = models.OneToOneField(User,to_field='id',on_delete=models.CASCADE)
