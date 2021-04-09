@@ -1,0 +1,4 @@
+{
+    "BASE_URL":"http://ec2-52-66-235-178.ap-south-1.compute.amazonaws.com/",
+    "env":"development"
+}
