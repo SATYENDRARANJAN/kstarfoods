@@ -12,11 +12,9 @@ class AddToCartBtnTop extends React.Component{
         }
     }
 
-    componentDidMount=()=>{
-
+    componentDidMount=()=>{       
     }
-    open=()=>{
-        
+    open=()=>{     
     }
 
     render(){

@@ -69,7 +69,7 @@ class ProductDetail extends React.Component{
                     )
     }
     
-    gotoBuyNow=async(openCart2M)=>{
+    gotoBuyNow=async(openM,openCart2M)=>{
         // this.props.history.push('/address')
 
 
@@ -92,13 +92,18 @@ class ProductDetail extends React.Component{
 
         //     }
         // )
-        openCart2M()
+        if (localStorage.getItem('token')){
+            openCart2M()
+        }
+        else{
+            openM()
+        }
     }
 
     render(){
         return(
             <MyContext.Consumer>
-            {({openCart2M,order_id})=>(
+            {({openM,openCart2M,order_id})=>(
         <Root>
             {/* <ProductTitle>   {this.state.item.product_name}</ProductTitle> */}
             <LeftWrapperDiv>
@@ -130,8 +135,8 @@ class ProductDetail extends React.Component{
                                         <ItemQuantity value={this.state.qty} name='qty' onChange={this.handleQtyChange}></ItemQuantity>
                                         <Decrement onClick={()=>{this.decrementQty()}}>-</Decrement>
                                 </ItemDiv>
-                <AddToCart onClick={()=>{this.addToCart()}}>Add to Cart</AddToCart>
-                <BuyNow onClick={()=>{this.gotoBuyNow(openCart2M)}}> Buy Now</BuyNow>
+                {localStorage.getItem('token') && <AddToCart onClick={()=>{this.addToCart()}}>Add to Cart</AddToCart>}
+                <BuyNow onClick={()=>{this.gotoBuyNow(openM,openCart2M)}}> Buy Now</BuyNow>
 
             </RightWrapperDiv>
 

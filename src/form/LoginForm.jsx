@@ -83,6 +83,11 @@ class LoginForm extends React.Component{
         })
     }
 
+    getTitle =()=>{
+        let title = localStorage.getItem('product_detail') ? 'Please Login First and then buy!' : 'Please Login !'
+        return title
+    }
+
     render(){
         return(
             <MyContext.Consumer>
@@ -91,6 +96,8 @@ class LoginForm extends React.Component{
                         {console.log("printing jwt: " + jwt +" "+setJwt)}
 
                         <Title>Welcome to Cherie!</Title>
+                        <Title>{this.getTitle()}</Title>
+
                         <Phone type="char" value={this.state.phone} name='phone' placeholder='Enter Phone no.' onChange={this.handlePhoneChange}></Phone>
                         { <SendOTP  onClick={this.sendOTP}>Send OTP</SendOTP>}
                         {/* {this.state.show_OTP &&<OTP  placeholder='Enter OTP'  type='number' name='otp' onChange={this.handleChange}/>} */}
@@ -121,6 +128,7 @@ const Title=styled.text`
     margin :20px;
     padding:4px;
     opacity:0.9;
+    color:#fff;
 `
 
 const Error=styled.text`

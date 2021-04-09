@@ -47,7 +47,8 @@ class App extends React.Component{
       setSelectedTag:this.setSelectedTag,
       tags:[],
       setTags:this.setTags,
-      itemlist:[]
+      itemlist:[],
+      logout:this.logout
     }
   }
 
@@ -79,6 +80,12 @@ openCartM=()=>{
 
 closeCartM=()=>{
   this.setState({cartopen:false})
+}
+
+logout =()=>{
+  localStorage.clear()
+  this.setState({jwt:''})
+
 }
 
 closeM=()=>{
@@ -121,12 +128,12 @@ setTags =(tags)=>{
 }
 
 render(){
-  const {loginopen,openM,closeM,jwt,setJwt,cartopen,openCartM,closeCartM,cart2open,openCart2M,closeCart2M,resetJwt,addressOpen,openAddress,closeAddress,order_id,selectedtag,setSelectedTag,tags,setTags}=this.state
+  const {loginopen,openM,closeM,jwt,setJwt,cartopen,openCartM,closeCartM,cart2open,openCart2M,closeCart2M,resetJwt,addressOpen,openAddress,closeAddress,order_id,selectedtag,setSelectedTag,tags,setTags,logout}=this.state
   return (
     <BrowserRouter>
       <MyContext.Provider value={{loginopen:loginopen,openM:openM,closeM:closeM,jwt:jwt,setJwt:setJwt,
         cartopen:cartopen,openCartM:openCartM,closeCartM:closeCartM,cart2open:cart2open,openCart2M:openCart2M,closeCart2M:closeCart2M,resetJwt:resetJwt,
-        addressOpen:addressOpen,openAddress:openAddress,closeAddress:closeAddress,order_id:order_id,selectedtag:selectedtag,setSelectedTag:setSelectedTag,tags:tags,setTags:setTags}}>
+        addressOpen:addressOpen,openAddress:openAddress,closeAddress:closeAddress,order_id:order_id,selectedtag:selectedtag,setSelectedTag:setSelectedTag,tags:tags,setTags:setTags,logout:logout}}>
           <Root className="App" >
             {/* <Navbar/> */}
             <Header>

@@ -3,6 +3,7 @@ import {Context} from '../globalStore/store.jsx'
 import styled from 'styled-components'
 import cartpng from '../assets/images/cart.png'
 import ModalStateUpdaterButton from '../components/ModalStateUpdaterButton.jsx'
+import ModalStateUpdaterButtonLogout from '../components/ModalStateUpdaterButtonLogout.jsx'
 
 export  const Title = ()=>{
     return (
@@ -41,6 +42,7 @@ export const AddToCartBtnTop = ({is_logged_in,openCartM})=>{
                 {console.log(is_logged_in)}
                 {is_logged_in ?<AddToCartBtn src={cartpng} onClick={openCartM}/>:null}
                 {!is_logged_in ?<ModalStateUpdaterButton/>:null}
+                {is_logged_in ?<ModalStateUpdaterButtonLogout/>:null}
 
             </CartTopDiv>
     )
