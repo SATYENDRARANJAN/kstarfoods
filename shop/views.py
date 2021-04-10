@@ -179,7 +179,7 @@ class DeliveryAddressViewSet(viewsets.ViewSet):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated,])
 def addToCart(request):
     user = request.user
     # if already added quantity increase
