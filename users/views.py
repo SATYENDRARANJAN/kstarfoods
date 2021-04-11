@@ -141,7 +141,7 @@ def login(request):
     print(gen_otp)
     phOtp.save()
 
-    api_key = '9870bc5d-25fa-11e9-9ee8-0200cd936042'
+    api_key = '4e2d126e-9a75-11eb-80ea-0200cd936042'
     #send otp to client
     import requests
     url = f'http://2factor.in/API/V1/{api_key}/SMS/{phone}/{gen_otp}'
