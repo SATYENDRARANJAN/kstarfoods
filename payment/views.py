@@ -58,7 +58,7 @@ class Razorpay():
                         "address":user_address
                     },
                     "theme": {
-                        "color": "#ffee6cc"
+                        "color": "#ffe6cc"
                     }
                 };
         return options
