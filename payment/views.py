@@ -45,9 +45,9 @@ class Razorpay():
                     "key": RAZORPAY_TEST_KEY,
                     "amount": order_amount,
                     "currency": "INR",
-                    "name": "@HiCherie !",
-                    "description": "Test Transaction",
-                    "image": "https://example.com/your_logo",
+                    "name": "@hiCherie !",
+                    "description": "Cherie Transaction",
+                    "image": "https://s3.ap-south-1.amazonaws.com/hicherie.in/CHERIE_LOGO.png",
                     "order_id": order_id,
                     "prefill": {
                                     "name": username,
@@ -58,7 +58,7 @@ class Razorpay():
                         "address":user_address
                     },
                     "theme": {
-                        "color": "#3399cc"
+                        "color": "#ffee6cc"
                     }
                 };
         return options
