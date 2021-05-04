@@ -68,7 +68,7 @@ class User1(AbstractBaseUser):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, phone=None,email =None ,password=None, is_staff=False, is_active=False, is_admin=False):
+    def create_user(self, phone=None,email =None ,password=None, is_staff=False, is_active=False, is_admin=False,utm_source=None,utm_medium=None,utm_campaign=None):
         if not phone:
             return ValueError("Please enter phone ")
         user = self.model (phone=phone,email=email)
@@ -76,8 +76,14 @@ class UserManager(BaseUserManager):
         user.is_staff=is_staff
         user.is_active=is_active
         user.is_admin = is_admin
+        if utm_source:
+            user.utm_source=utm_source
+        if utm_medium:
+            user.utm_medium =utm_medium
+        if utm_campaign:
+            user.utm_campaign =utm_campaign
         user.role = User.Customer
-        user.save(using= self._db)
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, phone=None,email =None ,password=None, is_staff=False, is_active=False, is_admin=False):
@@ -119,6 +125,11 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    utm_source = models.CharField(max_length=40,default=None,null=True)
+    utm_medium = models.CharField(max_length=40,default=None,null=True)
+    utm_campaign = models.CharField(max_length=40,default=None,null=True)
+    referral_code = models.CharField(max_length=40,null=True)
+    referrer = models.CharField(max_length=40,default=None,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=100,choices=[(Customer,_('Customer')),(Staff,_('Staff')),(Seller,'Seller')])

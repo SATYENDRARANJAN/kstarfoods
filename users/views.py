@@ -13,6 +13,7 @@ from users.models import User, UserAddress, PhoneOTP
 from users.serializers import UserSerializer
 from rest_framework_jwt.settings import api_settings
 
+from users.utils import save_utm_params
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
 JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
@@ -120,12 +121,19 @@ def login(request):
     # NEXT STEP /verify
     print(request.data)
     phone= request.data.get('phone',None)
+    utm_source= request.data.get('utm_source',None)
+    utm_medium= request.data.get('utm_medium',None)
+    utm_campaign= request.data.get('utm_campaign',None)
     user = User.objects.filter(phone=phone)
     if len(user)==0:
-        user= User.objects.create_user(phone=phone)
+        user= User.objects.create_user(phone=phone,utm_source=utm_source,utm_medium=utm_medium,utm_campaign=utm_campaign)
     elif len(user)==1:
         try:
             user = User.objects.get(phone=phone)
+            save_utm_params(user,utm_source,utm_medium,utm_campaign)
+
+            user2 = User.objects.get(phone=phone)
+            print(user2.utm_source ,user2.utm_medium,user2.utm_campaign)
         except User.DoesNotExist:
             return Response(error='user Does not exist',status=status.HTTP_400_BAD_REQUEST)
     else :
@@ -149,8 +157,8 @@ def login(request):
 
     payload = ""
     headers = {'content-type': 'application/x-www-form-urlencoded'}
-    response = requests.request("GET", url, data=payload, headers=headers)
-    print(response.text)
+    # response = requests.request("GET", url, data=payload, headers=headers)
+    # print(response.text)
     return Response(data={'user_id':user.id},status=status.HTTP_201_CREATED)
 
 
