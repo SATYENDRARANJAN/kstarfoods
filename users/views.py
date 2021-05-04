@@ -144,7 +144,7 @@ def login(request):
     api_key = 'e49d08e6-ac2f-11eb-80ea-0200cd936042'
     #send otp to client
     import requests
-    url = f'http://2factor.in/API/V1/{api_key}/SMS/{phone}/{gen_otp}'
+    url = f'http://2factor.in/API/V1/{api_key}/SMS/{phone}/{gen_otp}/CherieOTP'
     print(url)
 
     payload = ""
