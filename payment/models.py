@@ -10,7 +10,7 @@ class Transaction(models.Model):
     FAIL='fail'
     INITIATED='initiated'
     TRANSACTION_STATUS=((PAID,'paid'),(FAIL,'fail'),(INITIATED,'initiated'))
-    transaction_id = models.CharField(primary_key=True, max_length=20, default=create_transaction_id)
+    transaction_id = models.CharField(primary_key=True, max_length=200, default=create_transaction_id)
     orderproduct_id = models.CharField(max_length=200)
     rp_order = models.CharField(max_length=200,null=True,blank=True)
     amount = models.DecimalField(max_digits=6,decimal_places=2)

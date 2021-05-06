@@ -126,7 +126,7 @@ class DeliveryAddress(models.Model):
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     pincode = models.PositiveIntegerField()
-    phone_no_recipient = models.PositiveIntegerField()
+    phone_no_recipient = models.BigIntegerField()
     special_message =models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField
