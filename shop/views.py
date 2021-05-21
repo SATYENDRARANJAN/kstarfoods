@@ -16,9 +16,9 @@ from shop.constants import INITIATED,PAID,FAIL
 from payment.models import Transaction
 from payment.views import Razorpay
 from shop.models import Products, DeliveryInfo, Cart, DeliveryAddress, OrderProduct, \
-    create_orderproduct_id, Tags
+    create_orderproduct_id, Tags, PopularProducts
 from shop.serializers import ProductSerializer, DeliveryInfoSerializer, CartSerializer, DeliveryAddressSerializer, \
-    TagSerializer, OnlyTagSerializer
+    TagSerializer, OnlyTagSerializer, PopularProductSerializer
 from users.models import UserAddress
 
 
@@ -36,6 +36,12 @@ class ProductViewSet(viewsets.ViewSet):
 
     def create(self,request):
         pass
+
+    def popular_products(self,request):
+        queryset1= PopularProducts.objects.all().values_list('products_id',flat=True)
+        queryset2=Products.objects.filter(product_id__in=queryset1)
+        serializer = ProductSerializer(queryset2,many=True)
+        return Response(data={'products':serializer.data},status=status.HTTP_201_CREATED)
 
     def retrieve(self,request,pk=None):
         queryset = Products.objects.all()
@@ -289,3 +295,6 @@ def getTags(request):
     queryset = Tags.objects.all()
     serializer = OnlyTagSerializer(queryset,many=True)
     return Response(data=serializer.data,status=status.HTTP_200_OK)
+
+
+

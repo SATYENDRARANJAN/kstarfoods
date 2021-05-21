@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from shop.models import Products, DeliveryInfo, Cart, DeliveryAddress, Tags
+from shop.models import Products, DeliveryInfo, Cart, DeliveryAddress, Tags, PopularProducts
 from users.serializers import UserSerializer
 
 
@@ -47,6 +47,12 @@ class OnlyTagSerializer(serializers.ModelSerializer):
     class Meta:
         model =Tags
         fields ='__all__'
+
+
+class PopularProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=PopularProducts
+        fields='__all__'
 
 
 # class CartSerializer(serializers.Serializer):

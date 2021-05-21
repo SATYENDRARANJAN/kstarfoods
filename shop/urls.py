@@ -1,6 +1,6 @@
 from django.urls import path
 
-from shop import views
+from shop import views, admin_views
 from shop.views import ProductViewSet, DeliveryInfoViewSet, addToCart, getCartDetails, removeFromCart, createOrder, \
     DeliveryAddressViewSet, placeOrder, getTagsAndProducts, getTags
 
@@ -18,6 +18,10 @@ product_detail =ProductViewSet.as_view({
 
 product_list_tag = ProductViewSet.as_view({
     'get':'list_by_tag',
+})
+
+product_popular =ProductViewSet.as_view({
+    'get':'popular_products'
 })
 
 delivery_info_list = DeliveryInfoViewSet.as_view({
@@ -44,9 +48,12 @@ delivery_address_detail = DeliveryAddressViewSet.as_view({
     'delete':'destroy'
 })
 
+
+app_name='shop'
 urlpatterns = [
     path('products/',product_list,name='product-list'),
-    path('products/<slug:pk>',product_detail,name='product-detail'),
+    path('products_popular/',product_popular,name='products_popular'),
+    path('products/',product_detail,name='product'),
     path('products/list/<str:tag>',product_list_tag,name='product-list-tag'),
     path('delivery_info/',delivery_info_detail,name ='delivery_info_detail'),
     path('delivery_info/',delivery_info_list,name ='delivery_info_list'),
@@ -57,5 +64,7 @@ urlpatterns = [
     path('create_order/', createOrder),
     path('place_order/', placeOrder),
     path('get_tags_and_products/', getTagsAndProducts),
-    path('get_tags/', getTags)
+    path('get_tags/', getTags),
+    path('product_upload', admin_views.productUpload, name='product-upload'),
+
 ]

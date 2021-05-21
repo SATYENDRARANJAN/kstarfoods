@@ -137,4 +137,8 @@ class DeliveryAddress(models.Model):
 
 
 
+class PopularProducts(models.Model):
+    products = models.ForeignKey(Products, to_field='product_id',on_delete=models.SET_NULL,related_name='popular',null=True,blank=True)
+
+
 
