@@ -19,6 +19,7 @@ from shop.models import Products, DeliveryInfo, Cart, DeliveryAddress, OrderProd
     create_orderproduct_id, Tags, PopularProducts
 from shop.serializers import ProductSerializer, DeliveryInfoSerializer, CartSerializer, DeliveryAddressSerializer, \
     TagSerializer, OnlyTagSerializer, PopularProductSerializer
+from shop.shop_manager import getSearchResults
 from users.models import UserAddress
 
 
@@ -299,3 +300,12 @@ def getTags(request):
 
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def search(request):
+    key = request.query_params.get('key',None)[0]
+    results=[]
+    if key:
+        results=getSearchResults(key)
+    serializer= ProductSerializer(results,many=True)
+    return Response(data=serializer.data,status=status.HTTP_200_OK)
