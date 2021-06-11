@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from users.models import User, UserAddress, PhoneOTP
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, UserLeadSerializer
 from rest_framework_jwt.settings import api_settings
 
 from users.utils import save_utm_params
@@ -216,3 +216,38 @@ def send_otp(request):
     return Response(data={ "session":response["Details"]},status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def lead(request):
+    email = request.data.get('email',None)
+    phone= request.data.get('phone',None)
+    child_name= request.data.get('child_name',None)
+    age_group= request.data.get('age_group',None)
+    batch= request.data.get('batch',None)
+    message= request.data.get('message',None)
+    utm_source= request.data.get('utm_source',None)
+    utm_medium= request.data.get('utm_medium',None)
+    utm_campaign= request.data.get('utm_campaign',None)
+    parent_company= request.data.get('parent_company',None)
+    serializer = UserLeadSerializer(data=request.data,partial=True)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+    return Response(status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+#    phone_regex = RegexValidator(regex =r'^[6-9]{1}[0-9]{9}$',message="Check Phone no.")
+#     email= models.CharField(max_length=40)
+#     phone= models.CharField(max_length=12,validators=[phone_regex],unique=True,null=True)
+#     child_name = models.CharField(max_length=50,null=True,blank=True)
+#     age_group= models.CharField(choices=AGE_GROUPS,max_length=100,null=True,blank=True)
+#     batch= models.CharField(choices=BATCH_TIMINGS,max_length=100,null=True,blank=True)
+#     message=models.CharField(max_length=500, null=True)
+#     utm_source= models.CharField(max_length=40,null=True)
+#     utm_medium= models.CharField(max_length=40,null=True)
+#     utm_campaign= models.CharField(max_length=40,null=True)
+#     parent_company=models.CharField(max_length=200)

@@ -25,5 +25,5 @@ urlpatterns = [
     path('user/<uuid:pk>',user_detail,name ='user-detail'),
     path('login/',views.login),
     path('verify/',views.verify),
-
+    path('lead/',views.lead)
 ]

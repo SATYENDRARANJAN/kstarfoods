@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils.timezone import now
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
 
@@ -166,3 +167,29 @@ class UserAddress(models.Model):
 class PhoneOTP(models.Model):
     user = models.OneToOneField(User,to_field='id',on_delete=models.CASCADE)
     otp = models.IntegerField(max_length=6,null=True)
+
+
+class UserLeads(models.Model):
+    THREE_TO_SEVEN="THREE_TO_SEVEN"
+    SEVEN_TO_TWELVE="SEVEN_TO_TWELVE"
+    AGE_GROUPS=((THREE_TO_SEVEN,"3 to 7 years"),(SEVEN_TO_TWELVE,"7 to 12 years"))
+    MORNING="MORNING"
+    EVENING="EVENING"
+    NOON="NOON"
+    BATCH_TIMINGS=((MORNING,"8 to 11 am"),
+                   (NOON,"12 to 4 am"),
+                   (EVENING,"6 to 9 am"),)
+    phone_regex = RegexValidator(regex =r'^[6-9]{1}[0-9]{9}$',message="Check Phone no.")
+    email= models.CharField(max_length=40)
+    phone= models.CharField(max_length=12,validators=[phone_regex],unique=True,null=True)
+    child_name = models.CharField(max_length=50,null=True,blank=True)
+    age_group= models.CharField(choices=AGE_GROUPS,max_length=100,null=True,blank=True)
+    batch= models.CharField(choices=BATCH_TIMINGS,max_length=100,null=True,blank=True)
+    message=models.CharField(max_length=500, null=True)
+    utm_source= models.CharField(max_length=40,null=True)
+    utm_medium= models.CharField(max_length=40,null=True)
+    utm_campaign= models.CharField(max_length=40,null=True)
+    parent_company=models.CharField(max_length=200)
+    created_at =models.DateTimeField(auto_now_add=True)
+
+
